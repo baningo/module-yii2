@@ -326,10 +326,12 @@ class Yii2 extends Framework implements ActiveRecord, MultiSession, PartedModule
     {
         $this->recreateClient();
         $this->yiiLogger = new Yii2Connector\Logger();
-        $this->client->startApp($this->yiiLogger);
 
         $this->connectionWatcher = new Yii2Connector\ConnectionWatcher();
         $this->connectionWatcher->start();
+        $this->startTransactions();
+
+        $this->client->startApp($this->yiiLogger);
 
         // load fixtures before db transaction
         if ($test instanceof \Codeception\Test\Cest) {
@@ -339,9 +341,6 @@ class Yii2 extends Framework implements ActiveRecord, MultiSession, PartedModule
         } else {
             $this->loadFixtures($test);
         }
-
-
-        $this->startTransactions();
     }
 
     /**
