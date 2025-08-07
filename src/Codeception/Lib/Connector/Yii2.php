@@ -311,6 +311,7 @@ final class Yii2 extends Client
             throw new ModuleConfigException($this, "Failed to initialize Yii2 app");
         }
         \Yii::$app = $app;
+        \Yii::$app->db->close();
 
         if ($logger instanceof \yii\log\Logger) {
             Yii::setLogger($logger);
